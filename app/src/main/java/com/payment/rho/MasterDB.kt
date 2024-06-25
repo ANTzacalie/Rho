@@ -12,7 +12,6 @@ import androidx.security.crypto.MasterKey
 import androidx.security.crypto.MasterKeys
 import java.math.BigInteger
 
-// TODO: MAYBE ENCRYPT IT IN THE FUTURE
 class MasterDb(context: Context) : SQLiteOpenHelper(context,"cardStorage.db", null, 1) {
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -59,7 +58,7 @@ class MasterDb(context: Context) : SQLiteOpenHelper(context,"cardStorage.db", nu
                 put("CIP_TYPE", cipType)
                 put("IBAN", iban)
                 put("BG_COLOR", getRandomColor())
-                put("CARD_ATC", "1")
+                put("CARD_ATC", "0")
 
             }
 
@@ -184,7 +183,7 @@ class MasterDb(context: Context) : SQLiteOpenHelper(context,"cardStorage.db", nu
     }
 
 
-    //TODO: MASTER COMMENT -->> DE FACUT TABELUL CUMPARATURI(FIECARE CARD ARE UNUL DUPA ID UNIC) SI TREBUIE IMPLEMENTAT UN FEL DE DATE
+    //TODO: DB AS FOR 1.0 25/06/2024
 
 }
 

@@ -99,14 +99,13 @@ class SetupActivity: AppCompatActivity() {
 
             if(inputPassword.length() >= 4 && " " !in inputPassword.text.toString()) {
 
-                //AM CREAT BAZA DE DATE CU PAROLA INTRODUSA DE USER , TABELUL MAIN
+                //INITIALIZE DB FOR FIRST TIME
                 MasterDb(applicationContext)
 
-                //AM SALVAT STADIUL APLICATIE LA 1 , ASTA INSEAMNA CONECTAT
+                //APP STATE SET TO 1 AS USER ENTERED A PASSWORD(CONNECTED)
                 AndroidLocalStorage(applicationContext).saveAppState(1)
                 AndroidLocalStorage(applicationContext).savePassword(inputPassword.text.toString())
 
-                //MERGEM LA URMATOAREA ACTIVITATE
                 exitFlag = true; startActivity(Intent("UserActivity"))
 
             } else if(inputPassword.length() < 4) {
@@ -241,7 +240,7 @@ class UserActivity: AppCompatActivity() {
 
                 cardMainBoolean = false
 
-                // DISTRUGEM CARDUL SELECTAT!
+                // DELETE CARD FORM DB
                 removeCard(cardList[0], cardList[1], cardLinearLayout, getPromptLayout, getLayout, constraintLayout)
 
             }
@@ -268,10 +267,10 @@ class UserActivity: AppCompatActivity() {
 
         delete.setOnClickListener {
 
-            //STERGEM CARDUL DIN BAZA DE DATE!
+            // DELETE CARD FORM DB
             MasterDb(applicationContext).removeCard(cardId!!)
 
-            //DISTRUGEM PROMPT SI CARDUL DIN VIEW!
+
             constraintLayout.removeView(promptLayout)
             cardLinearLayout.removeView(cardLayout)
 
@@ -280,7 +279,6 @@ class UserActivity: AppCompatActivity() {
 
         goBack.setOnClickListener {
 
-            //DISTRUGEM DOAR PROMPT
             constraintLayout.removeView(promptLayout)
 
             cardMainBoolean = true
@@ -288,7 +286,6 @@ class UserActivity: AppCompatActivity() {
 
         constraintFather.setOnClickListener {
 
-            //DISTRUGEM DOAR PROMPT
             constraintLayout.removeView(promptLayout)
 
             cardMainBoolean = true
@@ -341,9 +338,9 @@ class AddCards: AppCompatActivity() {
 
             if(cardName.length() >= 1 && cardName.text.isNotBlank()) {
 
-                if(cardHolder.length() >= 3 && cardHolder.text.isNotBlank()) {
+                if(cardHolder.length() >= 0) {
 
-                    if(bankName.length() >= 2 && bankName.text.isNotBlank()) {
+                    if(bankName.length() >= 0) {
 
                         if (cardNumber.length() == 16) {
 
@@ -389,9 +386,9 @@ class AddCards: AppCompatActivity() {
 
                         } else { errorText.text = "Card Number should be 16 characters" }
 
-                    } else { errorText.text = "Bank Name should be at least two characters" }
+                    }
 
-                } else { errorText.text = "Card Holder should be at least three characters"}
+                }
 
             } else { errorText.text = "Card Name should be at least one character" }
 
@@ -457,7 +454,7 @@ class AddCards: AppCompatActivity() {
 
 }
 
-// TODO: TREBUIE SA VEDEM CUM FOLISIM CHIPUL NFC! SI MAI ALES CUM OBTINEM PERMISIUNE PENTRU AL FOLOSI!
+
 class CardActivity: AppCompatActivity() {
 
     private var isExit: Boolean = false
@@ -482,7 +479,7 @@ class CardActivity: AppCompatActivity() {
         val cardNumberText: String = "NUMBER: " + cardInfo[3]
         val cardNumber: TextView = findViewById(R.id.cardNumber); cardNumber.text = cardNumberText
 
-        val cardExpText: String = "EXP: " + cardInfo[4] + "/" + cardInfo[5] //TODO: VEZI CUM TREBUIE FORMATA DATA DE EXP A CARDULUI PENTRU NFC!
+        val cardExpText: String = "EXP: " + cardInfo[4] + "/" + cardInfo[5]
         val cardExp: TextView = findViewById(R.id.cardExp); cardExp.text = cardExpText
 
         val cardCcvText: String = "CCV: " + cardInfo[6]
@@ -591,17 +588,19 @@ class CardActivity: AppCompatActivity() {
     override fun onStop() {
         super.onStop()
 
+        /*
         masterNfcNumber = null
         masterNfcExpServiceCode = null
         masterNfcAid = null
         masterNfcNetwork = null
         masterNfcAidLenght = null
         masterNfcAtcNumber = null
+        */
 
         finish()
     }
 
-    //TRANSFORMS INT STRING INTO HEXADECIMAL FORMAT , YOU CAN LOOK INTO ASCII TABLE TO UNDERSTAND
+    //TRANSFORMS INT STRING INTO HEXADECIMAL FORMAT
     private fun stringToHexByteArray(input: String): ByteArray {
         val len = input.length
 
