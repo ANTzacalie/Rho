@@ -262,7 +262,7 @@ class AndroidLocalStorage(private val context: Context) {
 object StorageColors {
 
     val colorList: List<String> = listOf(
-        //TODO: BRO IMPROVE THE COLORS 💀
+        
         "#C5A3FF", "#D4A1FF", "#E5A1FF", "#F5A1FF", "#C5A1D5",
         "#C6A3FF", "#D5A1FF", "#E6A1FF", "#F6A1FF", "#C6A1D5",
         "#C7A3FF", "#D6A1FF", "#E7A1FF", "#F7A1FF", "#C7A1D5",
